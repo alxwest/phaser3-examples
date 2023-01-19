@@ -47,7 +47,7 @@ class Example extends Phaser.Scene {
                                     x: pointer.x,
                                     y: pointer.y,
                                     panningModel: 'HRTF',
-                                    distanceModel:' linear',
+                                    distanceModel: 'linear',
                                     rollOff: 10
                                 }
                             });
