@@ -41,7 +41,17 @@ class Example extends Phaser.Scene {
         this.text.setText('Click to start');
 
         this.input.on('pointerdown', function (pointer) {
-            this.music.play({source:{x:pointer.x, y:pointer.y, panningModel:'HRTF', distanceModel:'linear', rollOff:10 }});
+
+            this.music.play({
+                            source:{
+                                    x: pointer.x,
+                                    y: pointer.y,
+                                    panningModel: 'HRTF',
+                                    distanceModel:' linear',
+                                    rollOff: 10
+                                }
+                            });
+
             this.text.setText('Audio source at x:' + pointer.x +', y:'+ pointer.y);
         }, this);
     }
