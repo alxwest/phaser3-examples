@@ -27,7 +27,8 @@ class Example extends Phaser.Scene {
     }
 
     create() {
-        this.image= this.add.image(400, 400, 'speaker');
+
+        this.speaker= this.add.image(400, 400, 'speaker');
 
         this.music = this.sound.add('theme');
 
@@ -51,7 +52,7 @@ class Example extends Phaser.Scene {
 
         this.input.on('pointerdown', function (pointer) {
 
-            this.music.play({source:this.image});
+            this.music.play({source:this.speaker});
 
             this.sound.setAudioDestination(image);
 
