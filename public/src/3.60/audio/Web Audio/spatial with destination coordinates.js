@@ -1,54 +1,63 @@
-class Example extends Phaser.Scene {
+class Example extends Phaser.Scene
+{
+    preload ()
+    {
+        this.load.audio('theme', [
+            'assets/audio/gemattack-maintheme.m4a'
+        ]);
 
-    preload() {
-        this.load.pack('pack1', {
-                "pack": {
-                    "files": [
-                        {
-                            "type": "audio",
-                            "key": "theme",
-                            "url": [
-                                "assets/audio/oedipus_wizball_highscore.ogg",
-                                "assets/audio/oedipus_wizball_highscore.mp3"
-                            ]
-                        },
-                        {
-                            "type": "image",
-                            "key": "speaker",
-                            "url": "assets/sprites/speakers/middle.png"
-                        }
-                    ]
-                }});
+        this.load.image('speaker', 'assets/sprites/speakers/middle.png');
     }
 
-    create() {
-        this.image= this.add.image(400, 400, 'speaker');
+    create ()
+    {
+        this.image = this.add.image(400, 400, 'speaker');
 
-        this.music = this.sound.add('theme', {source:this.image});
+        this.music = this.sound.add('theme');
+
+        this.sound.setListenerPosition(400, 300);
 
         this.text = this.add.text(400, 100, 'Loading...', {
-            fontFamily: '\'Sorts Mill Goudy\', serif',
+            fontFamily: 'serif',
             fontSize: 40,
             color: '#fff',
             align: 'center'
         });
+
         this.text.setOrigin(0.5);
 
-        this.enableInput.call(this);
+        this.add.rectangle(400, 300, 4, 4, 0xff0000);
+
+        this.enableInput(this);
     }
 
-    enableInput() {
+    enableInput ()
+    {
         this.text.setText('Click to start');
 
-        this.input.on('pointerdown', function (pointer) {
+        this.input.once('pointerdown', () => {
 
+            this.music.play({
+                loop: true,
+                source: {
+                    x: 400,
+                    y: 300,
+                    refDistance: 50,
+                    follow: this.image
+                }
+            });
 
-            this.sound.setAudioDestination({x:pointer.x,y:pointer.y});
+            this.input.on('pointermove', pointer => {
 
-            this.text.setText('Audio destination at x:' + pointer.x +', y:'+ pointer.y);
+                this.image.x = pointer.worldX;
+                this.image.y = pointer.worldY;
 
-            this.music.play();
-        }, this);
+                this.text.setText(`Audio source at x: ${pointer.worldX} y: ${pointer.worldY}`);
+
+            });
+
+        });
+
     }
 }
 
